@@ -62,7 +62,10 @@ function Vector(x, y) {
 
 
 	this.getLength = function() {
-		return Math.sqrt(this.dotProduct(this));
+		return Math.sqrt(this.getSquaredLength());
+	}
+	this.getSquaredLength = function() {
+		return this.dotProduct(this);
 	}
 	
 	this.setLength = function(_length) {

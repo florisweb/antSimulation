@@ -4,33 +4,38 @@
 		<title></title>
 		<style>
 			body {
+				position: fixed;
+				width: 100vw;
+				height: 100vh;
 				padding: 0;
 				margin: 0;
-				position: fixed;
+
+				background: #000;
 			}
 
 			#renderCanvas {
-				border: 1px solid red;
 				width: 100vw;
-				max-width: 100vh;
+				height: 100vh;
+				background: #000;
+				border: 1px solid red;
 			}
 		</style>
 	</head>
 	<body>
 		<canvas id='renderCanvas' width="500" height='500'></canvas>
-		<script src='js/vector.js?a=2'></script>
+		<script src='js/vector.js?a=3'></script>
 		<script src='js/inputHandler.js?a=4'></script>
-		<script src='js/renderer.js?a=3'></script>
-		<script src='js/world.js?a=8'></script>
+		<script src='js/renderer.js?a=13'></script>
+		<script src='js/world.js?a=11'></script>
 		
 		<script>
 
-			for (let i = 0; i < 5000; i++)
+			for (let i = 0; i < 50; i++)
 			{
 				let ant = new Ant({
 					position: new Vector(
-						World.size.value[0] * .9,
-						World.size.value[1] * .9
+						World.size.value[0] * .5,
+						World.size.value[1] * .5
 					)
 				});
 				World.addAnt(ant);
