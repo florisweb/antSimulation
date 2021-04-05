@@ -17,7 +17,6 @@
 				width: 100vw;
 				height: 100vh;
 				background: #000;
-				border: 1px solid red;
 			}
 		</style>
 	</head>
@@ -25,12 +24,12 @@
 		<canvas id='renderCanvas' width="500" height='500'></canvas>
 		<script src='js/vector.js?a=3'></script>
 		<script src='js/inputHandler.js?a=4'></script>
-		<script src='js/renderer.js?a=13'></script>
-		<script src='js/world.js?a=11'></script>
+		<script src='js/renderer.js?a=14'></script>
+		<script src='js/world.js?a=12'></script>
 		
 		<script>
 
-			for (let i = 0; i < 50; i++)
+			for (let i = 0; i < 200; i++)
 			{
 				let ant = new Ant({
 					position: new Vector(

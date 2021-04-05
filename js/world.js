@@ -21,15 +21,24 @@ const World = new function() {
 		Renderer.update();
 	}
 
+	let lastUpdate = new Date();
+	this.desiredUPS = 60;
+	this.UPS = 0;
 	this.update = function() {
-		this.curTime += 1;
-		if (this.curTime % 5 == 0) this.grid.update(1);
+		let dt = (new Date() - lastUpdate) / 1000 * this.desiredUPS;
+
+		this.curTime += dt;
+		if (this.curTime % 5 < 1) this.grid.update(dt);
 		for (let ant of this.ants)
 		{
-			ant.update();
+			ant.update(dt);
 		}
 		
 		setTimeout(function () {World.update()}, 1);
+		this.UPS = Math.round(10000 / (new Date() - lastUpdate)) / 10;
+
+		lastUpdate = new Date();
+
 	}
 
 
@@ -154,12 +163,13 @@ function Tile(x, y, grid) {
 
 
 	this.draw = function(ctx) {
-		// Renderer.drawRect({
-		// 	position: this.position,
-		// 	size: tileSize,
-		// 	strokeColor: this.isNest ? "#fa0" : this.food > 0 ? "#f00" : "#333"
-		// });
+		if (Renderer.settings.drawGrid) Renderer.drawRect({
+			position: this.position,
+			size: tileSize,
+			strokeColor: this.isNest ? "#fa0" : this.food > 0 ? "#f00" : "#333"
+		});
 
+		if (!Renderer.settings.drawPheromones) return;
 		for (let i = 0; i < this.pheromones.length; i++)
 		{
 			this.pheromones[i].draw();
@@ -220,8 +230,8 @@ function Ant({position}) {
 	const pheromoneDropFrequency = 30;
 	let lastDirectionCalc = 0;
 	const directionCalcFrequency = 1;
-	this.update = function() {
-		this.position.add(this.direction.copy().scale(speed));
+	this.update = function(_dt) {
+		this.position.add(this.direction.copy().scale(speed * _dt));
 		let tile = World.grid.getTileByPos(this.position);
 		this.checkCollisions(tile);
 		if (!tile) return;

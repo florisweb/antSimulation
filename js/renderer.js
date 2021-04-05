@@ -26,7 +26,9 @@ const Renderer = new function() {
 	this.camera = new Renderer_Camera();
 
 	this.settings = {
-		drawAnts: true
+		drawAnts: true,
+		drawGrid: true,
+		drawPheromones: true,
 	}
 
 	this.update = function() {
@@ -36,11 +38,22 @@ const Renderer = new function() {
 		setTimeout(function () {Renderer.update()}, 50);
 		// requestAnimationFrame(function () {Renderer.update()});
 
-		if (!this.settings.drawAnts) return;
-		for (let ant of World.ants)
+		
+		if (this.settings.drawAnts) 
 		{
-			ant.draw(ctx);
+			for (let ant of World.ants)
+			{
+				ant.draw(ctx);
+			}
 		}
+
+		ctx.font = "15px";
+		ctx.fillStyle = "#f00";
+		ctx.fillText(World.UPS + " / " + World.desiredUPS + " ups", 10, 10);
+		ctx.fill();
+		lastFrame = new Date();
+
+
 	}
 
 
